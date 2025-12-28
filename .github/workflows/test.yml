@@ -7,7 +7,12 @@ jobs:
             script-files: ${{ steps.upload-artifact.outputs.scriptfile }}
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2  
+              uses: actions/checkout@v2
+            - name : cache node modules
+              uses: actions/cache@v3
+              with:
+                path: ~/.npm
+                key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
             - name: install dependencies
               run: npm ci
             - name: Linit code
