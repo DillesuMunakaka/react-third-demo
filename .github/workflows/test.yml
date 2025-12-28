@@ -14,5 +14,12 @@ jobs:
               run: npm run test
             - name: Build application
               run: npm run build
+            - name: upload artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: dist-files
+                path: |
+                    dist
+                    package.json
             - name: Deploy application
               run: echo "Deploying application..."
