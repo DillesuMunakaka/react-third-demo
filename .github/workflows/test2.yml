@@ -22,14 +22,14 @@ jobs:
         - name: Run test
           run: npm run test
     deploy:
-      needs: test
-      runs-on: ubuntu-latest
-      steps:
-          - name: Checkout repository
-            uses: actions/checkout@v2  
-          - name: install dependencies
-            run: npm ci
-          - name: Linit code
-            run: npm run build
-          - name: Deploy application
-            run: echo "Deploying application..."
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2  
+            - name: install dependencies
+              run: npm ci
+            - name: Linit code
+              run: npm run build
+            - name: Deploy application
+              run: echo "Deploying application..."
