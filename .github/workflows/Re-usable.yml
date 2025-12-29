@@ -1,4 +1,4 @@
-name: deployment exercise 2
+name: use reusable workflow
 on: push
 jobs:
     lint:
@@ -23,13 +23,5 @@ jobs:
           run: npm run test
     deploy:
         needs: test
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2  
-            - name: install dependencies
-              run: npm ci
-            - name: Linit code
-              run: npm run build
-            - name: Deploy application
-              run: echo "Deploying application..."
+        uses: ./.github/workflows/reusable.yml
+        

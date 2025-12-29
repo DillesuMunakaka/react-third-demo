@@ -1,7 +1,13 @@
 name: deployment exercise
 on: push
+env:
+    NODE_ENV: production
+    deploy_env: staging
 jobs:
     deploy:
+        env:
+            Databasename: ${{ secrets.DB_NAME_STAGING }}
+            Databasepassword: ${{ secrets.DB_PASSWORD_STAGING }}
         runs-on: ubuntu-latest
         outputs:
             script-files: ${{ steps.upload-artifact.outputs.scriptfile }}
@@ -18,8 +24,10 @@ jobs:
             - name: Linit code
               run: npm run lint
             - name: Run tests
+              id: run-tests
               run: npm run test
             - name: Build application
+              if: failure() && steps.run-tests.outcome == 'failure' 
               run: npm run build
             - name: Publish Js files
               id: publish-js
@@ -41,4 +49,4 @@ jobs:
             - name: check outputs
               run: ls
             - name: output filename
-              run: echo ${{ needs.deploy.outputs.script-files }}
+              run: echo ${{ env.NODE_ENV }}
